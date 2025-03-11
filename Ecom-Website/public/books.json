@@ -1,0 +1,74 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "1984",
+      "description": "A chilling exploration of totalitarianism, surveillance, and the power of language.",
+      "price": 1136.25,
+      "src": "Assets/1984.png"
+    },
+    {
+      "id": 2,
+      "title": "To Kill a Mockingbird",
+      "description": "A powerful story about racial injustice, morality, and human empathy.",
+      "price": 960.25,
+      "src": "Assets/mocking_bird.png"
+    },
+    {
+      "id": 3,
+      "title": "The Great Gatsby",
+      "description": "A tragic tale of love, ambition, and the American Dream, set in the Roaring Twenties.",
+      "price": 873.5,
+      "src": "Assets/great_gasby.png"
+    },
+    {
+      "id": 4,
+      "title": "Pride and Prejudice",
+      "description": "A witty and timeless exploration of love, class, and societal expectations.",
+      "price": 784.25,
+      "src": "Assets/pride_and_prejudice.png"
+    },
+    {
+      "id": 5,
+      "title": "The Alchemist",
+      "description": "A philosophical and spiritual journey about following your dreams and discovering your purpose.",
+      "price": 1047.25,
+      "src": "Assets/the_alchemist.png"
+    },
+    {
+      "id": 6,
+      "title": "Sapiens: A Brief History of Humankind",
+      "description": "A fascinating exploration of the history of humanity, from the evolution of Homo sapiens to the modern age.",
+      "price": 1397.25,
+      "src": "Assets/sapiens.png"
+    },
+    {
+      "id": 7,
+      "title": "The Catcher in the Rye",
+      "description": "A raw and honest portrayal of teenage angst, rebellion, and the search for identity.",
+      "price": 698.25,
+      "src": "Assets/catcher_in_rye.png"
+    },
+    {
+      "id": 8,
+      "title": "The Lord of the Rings",
+      "description": "An epic tale of adventure, friendship, and the battle between good and evil in a richly imagined world.",
+      "price": 1747.25,
+      "src": "Assets/lord_rings.png"
+    },
+    {
+      "id": 9,
+      "title": "Atomic Habits",
+      "description": "A practical guide to building good habits, breaking bad ones, and achieving long-term personal growth.",
+      "price": 1309.25,
+      "src": "Assets/atomic_habits.png"
+    },
+    {
+      "id": 10,
+      "title": "The Book Thief",
+      "description": "A heart-wrenching story set in Nazi Germany, narrated by Death, about the power of words and resilience.",
+      "price": 1223.25,
+      "src": "Assets/book_thief.png"
+    }
+  ]
+}

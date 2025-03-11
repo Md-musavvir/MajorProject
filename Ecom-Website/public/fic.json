@@ -1,0 +1,137 @@
+{
+  "books": [
+    {
+      "id": 11,
+      "title": "Dracula",
+      "description": "A classic Gothic horror novel about the infamous vampire Count Dracula.",
+      "price": 829,
+      "src": "Assets/dracula.png"
+    },
+    {
+      "id": 5,
+      "title": "The Alchemist",
+      "description": "A philosophical and spiritual journey about following your dreams and discovering your purpose.",
+      "price": 995,
+      "src": "Assets/the_alchemist.png"
+    },
+    {
+      "id": 12,
+      "title": "The Picture of Dorian Gray",
+      "description": "A Gothic novel about vanity, corruption, and the consequences of eternal youth.",
+      "price": 746,
+      "src": "Assets/dorian_gray.png"
+    },
+    {
+      "id": 13,
+      "title": "The Hobbit",
+      "description": "A fantasy adventure about Bilbo Baggins, a hobbit who embarks on a quest to reclaim a treasure guarded by a dragon.",
+      "price": 1244,
+      "src": "Assets/hobert.png"
+    },
+    {
+      "id": 14,
+      "title": "Dune",
+      "description": "A science fiction masterpiece about politics, religion, and survival on a desert planet.",
+      "price": 1410,
+      "src": "Assets/dune.png"
+    },
+    {
+      "id": 15,
+      "title": "Frankenstein",
+      "description": "A groundbreaking novel about creation, ambition, and the consequences of playing God.",
+      "price": 912,
+      "src": "Assets/frankenstein.png"
+    },
+    {
+      "id": 7,
+      "title": "The Catcher in the Rye",
+      "description": "A raw and honest portrayal of teenage angst, rebellion, and the search for identity.",
+      "price": 663,
+      "src": "Assets/catcher_in_rye.png"
+    },
+    {
+      "id": 2,
+      "title": "To Kill a Mockingbird",
+      "description": "A powerful story about racial injustice, morality, and human empathy.",
+      "price": 912,
+      "src": "Assets/mocking_bird.png"
+    },
+    {
+      "id": 16,
+      "title": "One Hundred Years of Solitude",
+      "description": "A magical realism novel chronicling the rise and fall of the Buendía family in the fictional town of Macondo.",
+      "price": 1161,
+      "src": "Assets/gabriel.png"
+    },
+    {
+      "id": 17,
+      "title": "The Hitchhiker’s Guide to the Galaxy",
+      "description": "A humorous science fiction series about the misadventures of an ordinary human in space.",
+      "price": 829,
+      "src": "Assets/hitchkers.png"
+    },
+    {
+      "id": 3,
+      "title": "The Great Gatsby",
+      "description": "A tragic tale of love, ambition, and the American Dream, set in the Roaring Twenties.",
+      "price": 829,
+      "src": "Assets/great_gasby.png"
+    },
+    {
+      "id": 18,
+      "title": "Harry Potter and the Sorcerer’s Stone",
+      "description": "The first book in the Harry Potter series, introducing the magical world and the young wizard's journey.",
+      "price": 1078,
+      "src": "Assets/harry_potter.png"
+    },
+    {
+      "id": 19,
+      "title": "Brave New World",
+      "description": "A dystopian novel exploring a future society driven by technology and consumerism.",
+      "price": 1078,
+      "src": "Assets/brave_new_world.png"
+    },
+    {
+      "id": 1,
+      "title": "1984",
+      "description": "A chilling exploration of totalitarianism, surveillance, and the power of language.",
+      "price": 1078,
+      "src": "Assets/1984.png"
+    },
+    {
+      "id": 10,
+      "title": "The Book Thief",
+      "description": "A heart-wrenching story set in Nazi Germany, narrated by Death, about the power of words and resilience.",
+      "price": 1161,
+      "src": "Assets/book_thief.png"
+    },
+    {
+      "id": 20,
+      "title": "Moby-Dick",
+      "description": "An epic tale of obsession, revenge, and the relentless pursuit of the great white whale.",
+      "price": 1244,
+      "src": "Assets/moby_dick.png"
+    },
+    {
+      "id": 8,
+      "title": "The Lord of the Rings",
+      "description": "An epic fantasy adventure about the struggle to destroy a powerful ring and save Middle-earth.",
+      "price": 1659,
+      "src": "Assets/lord_rings.png"
+    },
+    {
+      "id": 21,
+      "title": "Wuthering Heights",
+      "description": "A dark and passionate story of love, revenge, and the supernatural on the Yorkshire moors.",
+      "price": 912,
+      "src": "Assets/wuthering.png"
+    },
+    {
+      "id": 22,
+      "title": "Crime and Punishment",
+      "description": "A psychological exploration of guilt, morality, and redemption in 19th-century Russia.",
+      "price": 995,
+      "src": "Assets/crime.png"
+    }
+  ]
+}
