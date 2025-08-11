@@ -1,7 +1,7 @@
-import { User } from "../models/user.models";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import AsyncHandler from "../utils/AsyncHandler";
+import { User } from "../models/user.models.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import AsyncHandler from "../utils/AsyncHandler.js";
 
 const generateTokens = async (id) => {
   const user = await User.findById(id);
