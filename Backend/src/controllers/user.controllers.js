@@ -13,6 +13,7 @@ const generateTokens = async (id) => {
 };
 
 const registerUser = AsyncHandler(async (req, res) => {
+  console.log(req.body);
   const { username, email, password } = req.body;
   try {
     if ([username, email, password].some((field) => field?.trim() === "")) {
@@ -65,12 +66,11 @@ const loginUser = AsyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
   };
   res
     .status(200)
-    .cookie("AccessToken", accessToken, options)
-    .cookie("RefreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(
         200,
@@ -92,7 +92,6 @@ const logoutUser = AsyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
   };
   res
     .status(200)
@@ -102,6 +101,8 @@ const logoutUser = AsyncHandler(async (req, res) => {
 });
 const changePassword = AsyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
+  console.log(req.body);
+
   if (!(oldPassword && newPassword)) {
     throw new ApiError(400, "Passwords are required");
   }
