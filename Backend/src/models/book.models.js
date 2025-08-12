@@ -22,6 +22,10 @@ const bookSchema = new Schema(
       required: true,
       min: [0, "price cant be negative"],
     },
+    image: {
+      type: String,
+      required: true,
+    },
     category: {
       type: String,
       required: true,
