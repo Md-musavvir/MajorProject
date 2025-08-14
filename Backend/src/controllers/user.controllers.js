@@ -1,3 +1,5 @@
+import { Book } from "../models/book.models.js";
+import { Cart } from "../models/cart.models.js";
 import { User } from "../models/user.models.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -122,4 +124,83 @@ const changePassword = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "password changed successfully"));
 });
-export { changePassword, loginUser, logoutUser, registerUser };
+const returnByCategory = AsyncHandler(async (req, res) => {
+  const { category } = req.params;
+  if (!category) {
+    throw new ApiError(400, "category is required for fetching");
+  }
+  const books = await Book.find({ category }).sort({ createdAt: -1 });
+  if (books.length === 0) {
+    throw new ApiError(404, "no books in this category is found");
+  }
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        books,
+        "books fetched successfully for this category"
+      )
+    );
+});
+const addToCart = AsyncHandler(async (req, res) => {
+  const { bookId } = req.body;
+  if (!bookId) {
+    throw new ApiError(400, "Book id is required");
+  }
+  const book = await Book.findById(bookId);
+  if (!book) {
+    throw new ApiError(404, "Book not found");
+  }
+  let cart = await Cart.findOne({ user: req.user._id });
+  if (!cart) {
+    cart = await Cart.create({
+      user: req.user._id,
+      items: [{ book: bookId, quantity: 1 }],
+    });
+  } else {
+    const existingItem = cart.items.find(
+      (item) => item.book.toString() === bookId
+    );
+    if (!existingItem) {
+      cart.items.push({ book: bookId, quantity: 1 });
+    } else {
+      existingItem.quantity += 1;
+    }
+    await cart.save();
+  }
+  const populatedCart = await Cart.findById(cart._id).populate(
+    "items.book",
+    "title author price"
+  );
+  let grandTotal = 0;
+  const response = populatedCart.items.map((item) => {
+    const itemTotal = item.quantity * item.book.price;
+    grandTotal += itemTotal;
+    return {
+      bookId: item.book._id,
+      title: item.book.title,
+      author: item.book.author,
+      price: item.book.price,
+      quantity: item.quantity,
+      totalPrice: itemTotal,
+    };
+  });
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { items: response, grandTotal },
+        "here is the cart detail"
+      )
+    );
+});
+
+export {
+  changePassword,
+  loginUser,
+  logoutUser,
+  registerUser,
+  returnByCategory,
+};

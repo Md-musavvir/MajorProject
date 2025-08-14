@@ -38,4 +38,60 @@ const addBook = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, addedBook, "Book added successfully"));
 });
-export { addBook };
+const removeBook = AsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    throw new ApiError(400, "item id is required ");
+  }
+  const item = await Book.findById(id);
+  if (!item) {
+    throw new ApiError(404, "no item is found");
+  }
+  const deleted_book = await Book.findByIdAndDelete(id);
+  if (!deleted_book) {
+    throw new ApiError(500, "something went wrong while deleting the item");
+  }
+  res.status(200).json(new ApiResponse(200, {}, "item deleted successfully"));
+});
+const update_Book = AsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { title, author, price, category } = req.body;
+  const book = await Book.findById(id);
+  if (!book) {
+    throw new ApiError(404, "item not found");
+  }
+  if (
+    title === undefined &&
+    price === undefined &&
+    category === undefined &&
+    author === undefined
+  ) {
+    throw new ApiError(400, "atleast one field is required to update");
+  }
+  const updated_data = {};
+  if (title !== undefined) updated_data.title = title;
+  if (price !== undefined) updated_data.price = price;
+  if (category !== undefined) updated_data.category = category;
+  if (author !== undefined) updated_data.author = author;
+  const updated_item = await Book.findByIdAndUpdate(
+    { _id: id },
+    { $set: updated_data },
+    { new: true, runValidators: true, context: "query" }
+  );
+  if (!updated_item) {
+    throw new ApiError(500, "something went wrong while updating the item");
+  }
+  res
+    .status(200)
+    .json(new ApiResponse(200, updated_item, "item updated successfully"));
+});
+const getAllBooks = AsyncHandler(async (req, res) => {
+  const books = await Book.find().sort({ createdAt: -1 });
+  if (books.length === 0) {
+    throw new ApiError(404, "no books were found");
+  }
+  res
+    .status(200)
+    .json(new ApiResponse(200, books, "All books fetched successfully"));
+});
+export { addBook, getAllBooks, removeBook, update_Book };

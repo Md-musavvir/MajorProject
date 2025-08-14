@@ -1,5 +1,5 @@
 import { User } from "../models/user.models.js";
-import ApiError from "../utils/ApiError";
+import ApiError from "../utils/ApiError.js";
 import AsyncHandler from "../utils/AsyncHandler.js";
 
 const verifyAdmin = AsyncHandler(async (req, res, next) => {
