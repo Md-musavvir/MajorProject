@@ -196,11 +196,108 @@ const addToCart = AsyncHandler(async (req, res) => {
       )
     );
 });
+const removeFromCart = AsyncHandler(async (req, res) => {
+  const { bookId } = req.body;
+  if (!bookId) {
+    throw new ApiError(400, "Items id is required");
+  }
+  const cart = await Cart.findOne({ user: req.user._id });
+  if (!cart) {
+    throw new ApiError(404, "Cart doesnt exist");
+  }
+  const itemExist = cart.items.some((item) => item.book.toString() === bookId);
+  if (!itemExist) {
+    throw new ApiError(400, "Item doesnt exist in cart");
+  }
+
+  cart.items = cart.items.filter((item) => item.book.toString() !== bookId);
+  await cart.save();
+  const populatedCart = await Cart.findOne({ user: req.user._id }).populate(
+    "items.book",
+    "title author price"
+  );
+  let grandTotal = 0;
+  const newCart = populatedCart.items.map((item) => {
+    const total = item.quantity * item.book.price;
+    grandTotal += total;
+    return {
+      bookId: item.book._id,
+      title: item.book.title,
+      author: item.book.author,
+      price: item.book.price,
+      quantity: item.quantity,
+      totalPrice: total,
+    };
+  });
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { items: newCart, grandTotal },
+        "Item removed sucessfully"
+      )
+    );
+});
+const updatingQuantity = AsyncHandler(async (req, res) => {
+  const { bookId } = req.params;
+  const { action } = req.body;
+  if (!bookId || !action) {
+    throw new ApiError(400, "Item details ar required");
+  }
+  const cart = await Cart.findOne({ user: req.user._id });
+  if (!cart) {
+    throw new ApiError(404, "Cart doesnt exists");
+  }
+  const existingItem = cart.items.find(
+    (item) => item.book.toString() === bookId
+  );
+  if (!existingItem) {
+    throw new ApiError(404, "Item doesnt exist");
+  }
+  if (action === "increment") {
+    existingItem.quantity += 1;
+  } else if (action === "decrement" && existingItem.quantity > 1) {
+    existingItem.quantity -= 1;
+  } else {
+    cart.items = cart.items.filter((item) => item.book.toString() !== bookId);
+  }
+  await cart.save();
+  const populatedCart = await Cart.findOne({ user: req.user._id }).populate(
+    "items.book",
+    "title author price"
+  );
+  let grandTotal = 0;
+  const newCart = populatedCart.items.map((item) => {
+    const total = item.quantity * item.book.price;
+    grandTotal += total;
+    return {
+      bookId: item.book._id,
+      title: item.book.title,
+      author: item.book.author,
+      price: item.book.price,
+      quantity: item.quantity,
+      totalPrice: total,
+    };
+  });
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { item: newCart, grandTotal },
+        `item quantity has been successfully ${action}ed`
+      )
+    );
+});
 
 export {
+  addToCart,
   changePassword,
   loginUser,
   logoutUser,
   registerUser,
+  removeFromCart,
   returnByCategory,
+  updatingQuantity,
 };
