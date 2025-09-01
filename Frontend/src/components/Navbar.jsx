@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
+import { Search, ShoppingCart, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Search, X } from "lucide-react";
+
 import Cart from "./Cart";
 
 export default function Navbar({ cartItems = 0 }) {

@@ -32,7 +32,7 @@ const registerUser = AsyncHandler(async (req, res) => {
       "-password -refreshToken"
     );
     if (!createdUser) {
-      throw new ApiError(400, "something went wrong while registering user");
+      throw new ApiError(500, "something went wrong while registering user");
     }
     return res
       .status(200)
@@ -46,16 +46,17 @@ const registerUser = AsyncHandler(async (req, res) => {
 });
 const loginUser = AsyncHandler(async (req, res) => {
   //get data from user
-  //username or email
+  // email
   //find user
   //password check
   //access and refresh token
   //send cookies
-  const { username, email, password } = req.body;
-  if (!(username || email) || !password) {
+  const { email, password } = req.body;
+  console.log(req.body);
+  if (!email || !password) {
     throw new ApiError(400, "credentials are required");
   }
-  const user = await User.findOne({ $or: [{ username }, { email }] });
+  const user = await User.findOne({ email });
   if (!user) {
     throw new ApiError(404, "user doesnt exits");
   }
@@ -71,7 +72,7 @@ const loginUser = AsyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
-  res
+  return res
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)

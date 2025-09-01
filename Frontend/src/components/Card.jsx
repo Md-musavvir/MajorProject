@@ -1,8 +1,10 @@
 import React from "react";
+
 import { useDispatch } from "react-redux";
+
 import { addToCart } from "../Store/cartSlice";
 
-function Card({ src, title, description, price, id }) {
+function Card({ src, title, author, price, id }) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -17,7 +19,7 @@ function Card({ src, title, description, price, id }) {
       />
       <div className="mt-3">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-        <p className="text-gray-600 text-sm mt-1 line-clamp-2">{description}</p>
+        <p className="text-gray-600 text-sm mt-1 line-clamp-2">{author}</p>
         <div className="mt-3 flex justify-between items-center">
           <span className="text-gray-900 font-medium text-base">₹ {price}</span>
           <button

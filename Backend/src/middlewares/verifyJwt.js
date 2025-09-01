@@ -9,6 +9,7 @@ const verifyJwt = AsyncHandler(async (req, res, next) => {
     const token =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "").trim();
+
     if (!token) {
       throw new ApiError(403, "Token not found");
     }

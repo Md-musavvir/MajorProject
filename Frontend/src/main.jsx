@@ -1,21 +1,24 @@
-import { StrictMode } from "react";
+import "./index.css";
+
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./Store/store";
 
 import App from "./App";
 import AuthLayout from "./components/AuthLayout";
+import Fantasy from "./components/Fantasy.jsx";
 import Fiction from "./components/Fiction.jsx";
-import Login from "./components/Login.jsx";
-import Signup from "./components/Signup.jsx";
 import Home from "./components/Home.jsx";
-import "./index.css";
+import Login from "./components/Login.jsx";
+import NonFiction from "./components/NonFiction.jsx";
+import Science from "./components/Science.jsx";
+import Signup from "./components/Signup.jsx";
+import { store } from "./Store/store";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,9 +27,9 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="fiction" element={<Fiction />} />
-        <Route path="non-fiction" element={<h1>Non-fiction Books</h1>} />
-        <Route path="science" element={<h1>Science Books</h1>} />
-        <Route path="fantasy" element={<h1>Fantasy Books</h1>} />
+        <Route path="non-fiction" element={<NonFiction />} />
+        <Route path="science" element={<Science />} />
+        <Route path="fantasy" element={<Fantasy />} />
       </Route>
 
       {/* Routes without Navbar and Footer */}

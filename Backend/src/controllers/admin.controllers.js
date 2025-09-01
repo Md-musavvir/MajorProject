@@ -94,4 +94,33 @@ const getAllBooks = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, books, "All books fetched successfully"));
 });
-export { addBook, getAllBooks, removeBook, update_Book };
+const returnByCategoryToAdmin = AsyncHandler(async (req, res) => {
+  let { category } = req.params;
+
+  if (!category) {
+    throw new ApiError(400, "category is required for fetching");
+  }
+  category = category.toLowerCase();
+
+  const books = await Book.find({ category }).sort({ createdAt: -1 });
+  if (books.length === 0) {
+    throw new ApiError(404, "no books in this category is found");
+  }
+  console.log(books);
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        books,
+        "books fetched successfully for this category"
+      )
+    );
+});
+export {
+  addBook,
+  getAllBooks,
+  removeBook,
+  returnByCategoryToAdmin,
+  update_Book,
+};
