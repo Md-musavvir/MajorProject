@@ -1,5 +1,6 @@
 import { Book } from "../models/book.models.js";
 import { Cart } from "../models/cart.models.js";
+import { Order } from "../models/order.models.js";
 import { User } from "../models/user.models.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -292,13 +293,97 @@ const updatingQuantity = AsyncHandler(async (req, res) => {
     );
 });
 
+const ReturnCart = AsyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  if (!userId) {
+    throw new ApiError(400, "user id nor recieved");
+  }
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(404, "user not found");
+  }
+
+  const populatedCart = await Cart.findOne({ user: req.user._id }).populate(
+    "items.book",
+    "title author price"
+  );
+  let grandTotal = 0;
+  const newCart = populatedCart.items.map((item) => {
+    const total = item.quantity * item.book.price;
+    grandTotal += total;
+    return {
+      bookId: item.book._id,
+      title: item.book.title,
+      author: item.book.author,
+      price: item.book.price,
+      quantity: item.quantity,
+      totalPrice: total,
+    };
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, { item: newCart, grandTotal }, "cart data"));
+});
+
+const placeOrder = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    if (!userId) {
+      return res
+        .status(401)
+        .json(new ApiResponse(401, null, "Unauthorized: user not found"));
+    }
+
+    const { items, total, address, paymentMethod } = req.body;
+
+    if (!items || items.length === 0) {
+      return res.status(400).json(new ApiResponse(400, null, "Cart is empty"));
+    }
+    if (!address) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, "Address is required"));
+    }
+    if (!paymentMethod) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, "Payment method is required"));
+    }
+
+    const order = new Order({
+      user: userId,
+      items: items.map((i) => ({ book: i.book, quantity: i.quantity })),
+      total,
+      address,
+      paymentMethod,
+    });
+
+    await order.save();
+
+    await User.findByIdAndUpdate(userId, { cart: [] });
+
+    res
+      .status(201)
+      .json(new ApiResponse(201, order, "Order placed successfully"));
+  } catch (err) {
+    console.error("Error in placeOrder:", err);
+    res
+      .status(500)
+      .json(new ApiResponse(500, null, "Server error: " + err.message));
+  }
+};
+
 export {
   addToCart,
   changePassword,
   loginUser,
   logoutUser,
+  placeOrder,
   registerUser,
   removeFromCart,
   returnByCategory,
+  ReturnCart,
   updatingQuantity,
 };

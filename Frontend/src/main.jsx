@@ -11,6 +11,8 @@ import {
 
 import App from "./App";
 import AuthLayout from "./components/AuthLayout";
+import Cart from "./components/Cart.jsx";
+import Checkout from "./components/Checkout.jsx"; // ✅ import Checkout
 import Fantasy from "./components/Fantasy.jsx";
 import Fiction from "./components/Fiction.jsx";
 import Home from "./components/Home.jsx";
@@ -30,12 +32,14 @@ const router = createBrowserRouter(
         <Route path="non-fiction" element={<NonFiction />} />
         <Route path="science" element={<Science />} />
         <Route path="fantasy" element={<Fantasy />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
 
       {/* Routes without Navbar and Footer */}
       <Route element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="checkout" element={<Checkout />} /> {/* ✅ moved here */}
       </Route>
     </>
   )

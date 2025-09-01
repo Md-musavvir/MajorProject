@@ -1,14 +1,31 @@
 import React from "react";
 
+import axios from "axios";
 import { useDispatch } from "react-redux";
 
-import { addToCart } from "../Store/cartSlice";
+import { addToCart, removeFromCart } from "../Store/cartSlice";
 
 function Card({ src, title, author, price, id }) {
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(addToCart({ id, name: title, price }));
+  const handleClick = async () => {
+    try {
+      dispatch(addToCart({ id, name: title, price }));
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/user/addToCart",
+        { bookId: id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(removeFromCart(id));
+    }
   };
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 p-4 transition-transform duration-300 hover:scale-105">
