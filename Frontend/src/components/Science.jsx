@@ -12,7 +12,7 @@ function Science() {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:8000/api/v1/admin/getBooks/science",
+          "http://localhost:8000/api/v1/user/getBooks/science",
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,

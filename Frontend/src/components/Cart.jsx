@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // ✅ import navigation hook
 
-import { addToCart, removeFromCart } from "../Store/cartSlice";
+import { removeFromCart } from "../Store/cartSlice";
 
 function Cart() {
   const cart = useSelector((state) => state.cart.cart);
@@ -29,12 +29,11 @@ function Cart() {
       );
     } catch (error) {
       console.log(error);
-      dispatch(addToCart({ id, name, price }));
     }
   };
 
   const handleCheckout = () => {
-    navigate("/checkout"); // ✅ redirect to Checkout.jsx
+    navigate("/checkout");
   };
 
   return (

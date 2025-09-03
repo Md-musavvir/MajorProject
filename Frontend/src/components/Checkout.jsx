@@ -14,7 +14,6 @@ function Checkout() {
   const [placingOrder, setPlacingOrder] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch cart items from backend
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -24,7 +23,6 @@ function Checkout() {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        // Extract items and grand total based on your controller response
         const items = response.data.data?.item || [];
         const total = response.data.data?.grandTotal || 0;
 
@@ -41,7 +39,6 @@ function Checkout() {
     fetchCart();
   }, []);
 
-  // Handle order placement
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setError("");
@@ -84,7 +81,6 @@ function Checkout() {
       setSuccess("Order placed successfully!");
       console.log("Order response:", response.data);
 
-      // Optionally redirect to home or order confirmation page
       setTimeout(() => {
         navigate("/");
       }, 1500);
@@ -116,7 +112,6 @@ function Checkout() {
         <p className="text-green-600 mb-4 text-center font-medium">{success}</p>
       )}
 
-      {/* Cart Summary */}
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-gray-700">Your Cart</h2>
 
@@ -148,7 +143,6 @@ function Checkout() {
         )}
       </div>
 
-      {/* Address & Payment Form */}
       <form
         onSubmit={handlePlaceOrder}
         className="bg-white p-6 rounded-lg shadow border border-gray-200 space-y-6"
