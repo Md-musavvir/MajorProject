@@ -8,8 +8,12 @@ import {
   placeOrder,
   registerUser,
   removeFromCart,
+  returnBookById,
   returnByCategory,
   ReturnCart,
+  returnOrders,
+  returnSearch,
+  returnUserData,
 } from "../controllers/user.controllers.js";
 import verifyJwt from "../middlewares/verifyJwt.js";
 
@@ -24,4 +28,8 @@ router.put("/removeFromCart", removeFromCart);
 router.get("/getCart", ReturnCart);
 router.put("/changePassword", changePassword);
 router.post("/placeOrder", placeOrder);
+router.get("/userData", returnUserData);
+router.get("/getOrders", returnOrders);
+router.get("/getBook", returnSearch);
+router.get("/fetchBook/:bookId", returnBookById);
 export default router;

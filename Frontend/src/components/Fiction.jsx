@@ -17,6 +17,7 @@ export default function Fiction() {
             withCredentials: true,
           }
         );
+
         setProd(response.data.data || []);
       } catch (error) {
         console.error(error);

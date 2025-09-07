@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import BookAdminDashboard from "./BookAdminDashboard";
 import Card from "./Card";
 import Carousel from "./Corousel";
 
@@ -69,7 +68,6 @@ export default function Home() {
         </div>
       </section>
       <Carousel />
-      <BookAdminDashboard />
     </div>
   );
 }

@@ -105,6 +105,18 @@ const logoutUser = AsyncHandler(async (req, res) => {
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "user logged out successfully"));
 });
+const returnUserData = AsyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  console.log(userId);
+  if (!userId) {
+    throw new ApiError(404, "no user id is provided");
+  }
+  const user = await User.findById(userId).select("-password -refreshToken");
+  if (!user) {
+    throw new ApiError(404, "user doesnt exist");
+  }
+  res.status(200).json(new ApiResponse(200, user, "here is user data"));
+});
 const changePassword = AsyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   console.log(req.body);
@@ -147,6 +159,7 @@ const returnByCategory = AsyncHandler(async (req, res) => {
 });
 const addToCart = AsyncHandler(async (req, res) => {
   const { bookId } = req.body;
+  console.log(bookId);
   if (!bookId) {
     throw new ApiError(400, "Book id is required");
   }
@@ -292,6 +305,36 @@ const updatingQuantity = AsyncHandler(async (req, res) => {
       )
     );
 });
+const returnSearch = AsyncHandler(async (req, res) => {
+  const { title } = req.query;
+
+  if (!title) {
+    throw new ApiError(400, "title is required");
+  }
+
+  const books = await Book.find({
+    title: { $regex: title, $options: "i" },
+  });
+
+  if (!books || books.length === 0) {
+    throw new ApiError(404, "no books found");
+  }
+
+  res.status(200).json(new ApiResponse(200, books, "matching books found"));
+});
+const returnBookById = AsyncHandler(async (req, res) => {
+  const { bookId } = req.params;
+  console.log("in the controller");
+  console.log(bookId);
+  if (!bookId) {
+    throw new ApiError(404, "book id not recieved");
+  }
+  const book = await Book.findById(bookId);
+  if (!book) {
+    throw new ApiError(404, "book not found");
+  }
+  res.status(200).json(new ApiResponse(200, book, "required book"));
+});
 
 const ReturnCart = AsyncHandler(async (req, res) => {
   const userId = req.user._id;
@@ -325,6 +368,24 @@ const ReturnCart = AsyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, { item: newCart, grandTotal }, "cart data"));
+});
+const returnOrders = AsyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  if (!userId) {
+    throw new ApiError(400, "user id doesnt exists");
+  }
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(404, "user not found");
+  }
+  const order = await Order.find({ user: userId })
+    .populate("user", "name email")
+    .populate("items.book", "title price author");
+  if (!order || order.length === 0) {
+    throw new ApiError(404, "No orders found for this user");
+  }
+
+  res.status(200).json(new ApiResponse(200, order, "here is your orders"));
 });
 
 const placeOrder = async (req, res) => {
@@ -383,7 +444,11 @@ export {
   placeOrder,
   registerUser,
   removeFromCart,
+  returnBookById,
   returnByCategory,
   ReturnCart,
+  returnOrders,
+  returnSearch,
+  returnUserData,
   updatingQuantity,
 };

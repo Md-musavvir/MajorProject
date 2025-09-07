@@ -22,6 +22,7 @@ function Card({ src, title, author, price, id }) {
           },
         }
       );
+      console.log(response);
     } catch (error) {
       console.log(error);
       dispatch(removeFromCart(id));
