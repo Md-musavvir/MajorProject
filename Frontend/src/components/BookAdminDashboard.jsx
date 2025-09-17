@@ -145,13 +145,11 @@ function BookAdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-slate-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent)] animate-pulse"></div>
       <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-float"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full blur-3xl animate-float-delayed"></div>
 
       <div className="relative z-10 p-8 space-y-16">
-        {/* Header Section */}
         <div className="text-center space-y-4 pt-8">
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-900/30 to-cyan-900/30 border border-purple-500/20 rounded-full backdrop-blur-xl">
             <BookOpen className="w-6 h-6 text-cyan-400" />
@@ -165,7 +163,6 @@ function BookAdminDashboard() {
           </h1>
         </div>
 
-        {/* Add Book Form */}
         <form
           onSubmit={handleSubmit}
           encType="multipart/form-data"
@@ -293,7 +290,6 @@ function BookAdminDashboard() {
           </div>
         </form>
 
-        {/* Books Management Section */}
         <div className="max-w-7xl mx-auto">
           <div className="bg-black/40 backdrop-blur-2xl border border-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl p-10 shadow-2xl">
             <div className="flex items-center justify-between mb-8">
@@ -427,7 +423,6 @@ function BookAdminDashboard() {
               </div>
             )}
 
-            {/* Edit Modal */}
             {editingBook && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                 <div className="max-w-2xl w-full bg-black/90 backdrop-blur-2xl border border-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-3xl p-8 shadow-2xl">

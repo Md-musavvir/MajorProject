@@ -19,7 +19,6 @@ const addBook = AsyncHandler(async (req, res) => {
   }
   const image = await uploadOnCloudinary(imagePath);
   if (!image || (!image.url && !image.secure_url)) {
-    console.log(image);
     throw new ApiError(500, "something went wrong while uploading the image");
   }
   const imageUrl = image?.url || image?.secure_url;

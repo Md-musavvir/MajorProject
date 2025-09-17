@@ -49,15 +49,12 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6 pt-24">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-        {/* Header */}
         <div className="bg-blue-600 p-6 text-white">
           <h2 className="text-3xl font-bold">Your Profile</h2>
           <p className="text-blue-200 mt-1">Manage your account details</p>
         </div>
 
-        {/* Content */}
         <div className="p-8 grid grid-cols-1 gap-6">
-          {/* Username */}
           <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
             <User className="text-blue-600" size={28} />
             <div>
@@ -68,7 +65,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Email */}
           <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
             <Mail className="text-blue-600" size={28} />
             <div>
@@ -77,7 +73,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Role */}
           <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
             <Shield className="text-blue-600" size={28} />
             <div>
@@ -89,7 +84,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="p-6 text-center text-gray-500 text-sm">
           ReadHorizon &copy; 2025
         </div>

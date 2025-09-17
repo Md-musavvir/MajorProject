@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import axios from "axios";
 
 function Orders() {
@@ -8,7 +9,7 @@ function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem("accessToken"); // Assuming you store JWT in localStorage
+        const token = localStorage.getItem("accessToken");
         const response = await axios.get(
           "http://localhost:8000/api/v1/user/getOrders",
           {
@@ -18,7 +19,7 @@ function Orders() {
           }
         );
 
-        setOrders(response.data.data); // backend sends { data: [...] }
+        setOrders(response.data.data);
       } catch (error) {
         console.error("Error fetching orders:", error);
       } finally {

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function Login() {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/user/login",
-        { email, password }, // ✅ send as JSON
+        { email, password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -26,32 +26,29 @@ function Login() {
       const { accessToken, refreshToken, user } = response.data.data;
 
       if (response.status === 200 && accessToken) {
-        // ✅ store tokens + role
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("role", user.role);
 
-        setMessage(response.data.message);
         setError("");
+        toast.success(response.data.message || "Login successful!");
 
-        // ✅ role-based navigation
-        if (user.role === "admin") {
-          navigate("/admin-dashboard"); // BookAdminDashboard
-        } else {
-          navigate("/");
-        }
+        setTimeout(() => {
+          if (user.role === "admin") navigate("/admin-dashboard");
+          else navigate("/");
+        }, 500);
       }
-    } catch (error) {
-      console.error(error);
-
-      if (error.response) {
-        setError(error.response.data.message || "❌ Unexpected error");
+    } catch (err) {
+      console.error(err);
+      let msg = "❌ Unexpected error";
+      if (err.response) {
+        msg = err.response.data.message || msg;
       } else {
-        setError("❌ No server response");
+        msg = "❌ No server response";
       }
-
-      setMessage("");
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -104,11 +101,8 @@ function Login() {
           </button>
         </form>
 
-        {/* ✅ Success/Error messages */}
-        {message && <p className="mt-3 text-sm text-green-600">{message}</p>}
         {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
-        {/* ✅ Register link */}
         <p className="mt-4 text-sm text-gray-600 text-center">
           Don’t have an account?{" "}
           <Link to="/register" className="text-blue-500 hover:underline">

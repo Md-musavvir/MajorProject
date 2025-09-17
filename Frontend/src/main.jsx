@@ -116,13 +116,11 @@ const router = createBrowserRouter(
         />
       </Route>
 
-      {/* Auth routes */}
       <Route element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
+        <Route path="register" element={<Signup />} />
       </Route>
 
-      {/* Admin dashboard */}
       <Route
         path="admin-dashboard"
         element={

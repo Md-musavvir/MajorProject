@@ -16,7 +16,6 @@ export default function Navbar({ cartItems = 0 }) {
   const navigate = useNavigate();
   const searchRef = useRef(null);
 
-  // Fetch user info
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) return;
@@ -29,7 +28,6 @@ export default function Navbar({ cartItems = 0 }) {
       .catch((err) => console.error("Failed to fetch user:", err));
   }, []);
 
-  // Handle search input change
   const handleChange = async (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -43,7 +41,7 @@ export default function Navbar({ cartItems = 0 }) {
           `http://localhost:8000/api/v1/user/getBook?title=${value}`,
           { headers: { Authorization: `Bearer ${token}` } } // send token
         );
-        // if backend returns single book, make it array
+
         const books = Array.isArray(res.data.data)
           ? res.data.data
           : [res.data.data];
@@ -56,7 +54,6 @@ export default function Navbar({ cartItems = 0 }) {
     }
   };
 
-  // Handle Enter key press
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && suggestions.length > 0) {
       navigate(`/book/${suggestions[0]._id}`); // redirect to first match
@@ -65,14 +62,12 @@ export default function Navbar({ cartItems = 0 }) {
     }
   };
 
-  // Handle clicking a suggestion
   const handleSuggestionClick = (bookId) => {
     navigate(`/book/${bookId}`);
     setQuery("");
     setSuggestions([]);
   };
 
-  // Hide suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -91,7 +86,6 @@ export default function Navbar({ cartItems = 0 }) {
             ReadHorizon
           </Link>
 
-          {/* Search Bar */}
           <div ref={searchRef} className="relative flex items-center w-1/3">
             <input
               type="text"
@@ -103,7 +97,6 @@ export default function Navbar({ cartItems = 0 }) {
             />
             <Search className="absolute right-3 text-gray-500" size={20} />
 
-            {/* Suggestions dropdown */}
             {suggestions.length > 0 && (
               <ul className="absolute top-12 left-0 w-full bg-white border rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto">
                 {suggestions.map((book) => (
@@ -122,7 +115,6 @@ export default function Navbar({ cartItems = 0 }) {
             )}
           </div>
 
-          {/* Navigation Links */}
           <div className="hidden md:flex space-x-4 text-gray-700 font-medium">
             <Link to="/fiction" className="hover:text-blue-600">
               Fiction
@@ -141,7 +133,6 @@ export default function Navbar({ cartItems = 0 }) {
             </Link>
           </div>
 
-          {/* Cart & User */}
           <div className="flex items-center space-x-4">
             <button onClick={() => setShowCart(true)} className="relative">
               <ShoppingCart
@@ -162,7 +153,6 @@ export default function Navbar({ cartItems = 0 }) {
         </div>
       </nav>
 
-      {/* Cart Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transition-transform duration-300 ease-in-out ${
           showCart ? "translate-x-0" : "translate-x-full"
@@ -177,7 +167,6 @@ export default function Navbar({ cartItems = 0 }) {
         <Cart />
       </div>
 
-      {/* User Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transition-transform duration-300 ease-in-out ${
           showUserPanel ? "translate-x-0" : "translate-x-full"

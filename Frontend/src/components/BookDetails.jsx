@@ -15,7 +15,6 @@ export default function BookDetails() {
   const [error, setError] = useState("");
   const [adding, setAdding] = useState(false);
 
-  // Fetch book details
   useEffect(() => {
     const fetchBook = async () => {
       const token = localStorage.getItem("accessToken");
@@ -41,18 +40,15 @@ export default function BookDetails() {
     fetchBook();
   }, [id]);
 
-  // Hybrid Add to Cart
   const handleAddToCart = async () => {
     if (!book) return;
     setAdding(true);
 
     try {
-      // Optimistic Redux update
       dispatch(
         addToCart({ id: book._id, name: book.title, price: book.price })
       );
 
-      // Backend API call
       const token = localStorage.getItem("accessToken");
       await axios.post(
         "http://localhost:8000/api/v1/user/addToCart",
@@ -67,7 +63,6 @@ export default function BookDetails() {
 
       console.log(`${book.title} added to cart successfully!`);
     } catch (err) {
-      // Rollback if API fails
       dispatch(removeFromCart(book._id));
       console.error("Failed to add to cart:", err);
     } finally {
@@ -82,7 +77,6 @@ export default function BookDetails() {
 
   return (
     <div className="container mx-auto mt-32 p-8 flex flex-col md:flex-row gap-12 bg-white rounded-2xl shadow-2xl border border-gray-200">
-      {/* Book Image */}
       <div className="md:w-1/3 flex justify-center items-start">
         <img
           src={book.image}
@@ -91,7 +85,6 @@ export default function BookDetails() {
         />
       </div>
 
-      {/* Book Details */}
       <div className="md:w-2/3 flex flex-col justify-start gap-6">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 capitalize">
           {book.title}
@@ -112,7 +105,6 @@ export default function BookDetails() {
             "No description available. This section can contain the book synopsis, author notes, or other relevant details."}
         </p>
 
-        {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
           disabled={adding}

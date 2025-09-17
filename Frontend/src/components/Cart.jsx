@@ -2,14 +2,14 @@ import React from "react";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // ✅ import navigation hook
+import { useNavigate } from "react-router-dom";
 
 import { removeFromCart } from "../Store/cartSlice";
 
 function Cart() {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate();
 
   const handleRemove = async (id, name, price) => {
     try {
@@ -60,7 +60,6 @@ function Cart() {
         ))}
       </ul>
 
-      {/* ✅ Checkout Button */}
       {cart.length > 0 && (
         <div className="mt-6 flex justify-end">
           <button

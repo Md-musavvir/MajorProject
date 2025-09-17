@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Card from "./Card";
 import Carousel from "./Corousel";
 
 export default function Home() {
@@ -51,22 +50,51 @@ export default function Home() {
         </p>
       </section>
       <section className="mt-12">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Top Picks
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
+          Words from Great Authors
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {prod.map((book) => (
-            <Card
-              src={book.src}
-              title={book.title}
-              description={book.description}
-              price={book.price}
-              id={book.id}
-              key={book.id}
-            />
+          {[
+            {
+              id: 1,
+              quote:
+                "A reader lives a thousand lives before he dies. The man who never reads lives only one.",
+              author: "George R.R. Martin",
+            },
+            {
+              id: 2,
+              quote:
+                "Until I feared I would lose it, I never loved to read. One does not love breathing.",
+              author: "Harper Lee",
+            },
+            {
+              id: 3,
+              quote:
+                "The more that you read, the more things you will know. The more that you learn, the more places you’ll go.",
+              author: "Dr. Seuss",
+            },
+            {
+              id: 4,
+              quote:
+                "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.",
+              author: "Haruki Murakami",
+            },
+          ].map((q) => (
+            <div
+              key={q.id}
+              className="bg-gradient-to-br from-yellow-50 to-white shadow-lg rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all duration-300"
+            >
+              <p className="text-gray-700 italic text-lg mb-4 leading-relaxed">
+                “{q.quote}”
+              </p>
+              <p className="text-right text-gray-600 font-semibold">
+                — {q.author}
+              </p>
+            </div>
           ))}
         </div>
       </section>
+
       <Carousel />
     </div>
   );

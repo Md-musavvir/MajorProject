@@ -16,44 +16,57 @@ const generateTokens = async (id) => {
 };
 
 const registerUser = AsyncHandler(async (req, res) => {
-  console.log(req.body);
   const { username, email, password } = req.body;
-  try {
-    console.log(req.body);
 
+  try {
     if ([username, email, password].some((field) => field?.trim() === "")) {
       throw new ApiError(400, "All fields are required");
     }
-    const existedUser = await User.findOne({ $or: [{ email }, { username }] });
+
+    const emailTrimmed = email?.trim().toLowerCase();
+    const usernameTrimmed = username?.trim();
+
+    const existedUser = await User.findOne({
+      $or: [{ email: emailTrimmed }, { username: usernameTrimmed }],
+    });
+
     if (existedUser) {
-      throw new ApiError(409, "user already exists");
+      if (existedUser.email === emailTrimmed) {
+        throw new ApiError(409, "Email already in use");
+      }
+      if (existedUser.username === usernameTrimmed) {
+        throw new ApiError(409, "Username already taken");
+      }
+      throw new ApiError(409, "User already exists (unknown match)");
     }
-    const user = await User.create({ username, email, password });
+
+    const user = await User.create({
+      username: usernameTrimmed,
+      email: emailTrimmed,
+      password,
+    });
+
     const createdUser = await User.findById(user._id).select(
       "-password -refreshToken"
     );
+
     if (!createdUser) {
-      throw new ApiError(500, "something went wrong while registering user");
+      throw new ApiError(500, "Something went wrong while registering user");
     }
+
     return res
       .status(200)
-      .json(new ApiResponse(201, createdUser, "User registered succesfully"));
+      .json(new ApiResponse(200, createdUser, "User registered successfully"));
   } catch (error) {
-    console.log(error);
     return res.status(error.statusCode || 500).json({
-      message: error.message || "cant register user",
+      message: error.message || "Can't register user",
     });
   }
 });
+
 const loginUser = AsyncHandler(async (req, res) => {
-  //get data from user
-  // email
-  //find user
-  //password check
-  //access and refresh token
-  //send cookies
   const { email, password } = req.body;
-  console.log(req.body);
+
   if (!email || !password) {
     throw new ApiError(400, "credentials are required");
   }
@@ -107,7 +120,7 @@ const logoutUser = AsyncHandler(async (req, res) => {
 });
 const returnUserData = AsyncHandler(async (req, res) => {
   const userId = req.user._id;
-  console.log(userId);
+
   if (!userId) {
     throw new ApiError(404, "no user id is provided");
   }
@@ -119,7 +132,6 @@ const returnUserData = AsyncHandler(async (req, res) => {
 });
 const changePassword = AsyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  console.log(req.body);
 
   if (!(oldPassword && newPassword)) {
     throw new ApiError(400, "Passwords are required");
@@ -159,7 +171,7 @@ const returnByCategory = AsyncHandler(async (req, res) => {
 });
 const addToCart = AsyncHandler(async (req, res) => {
   const { bookId } = req.body;
-  console.log(bookId);
+
   if (!bookId) {
     throw new ApiError(400, "Book id is required");
   }
@@ -324,8 +336,7 @@ const returnSearch = AsyncHandler(async (req, res) => {
 });
 const returnBookById = AsyncHandler(async (req, res) => {
   const { bookId } = req.params;
-  console.log("in the controller");
-  console.log(bookId);
+
   if (!bookId) {
     throw new ApiError(404, "book id not recieved");
   }
@@ -374,18 +385,27 @@ const returnOrders = AsyncHandler(async (req, res) => {
   if (!userId) {
     throw new ApiError(400, "user id doesnt exists");
   }
+
   const user = await User.findById(userId);
   if (!user) {
     throw new ApiError(404, "user not found");
   }
-  const order = await Order.find({ user: userId })
+
+  let orders = await Order.find({ user: userId })
     .populate("user", "name email")
     .populate("items.book", "title price author");
-  if (!order || order.length === 0) {
+
+  if (!orders || orders.length === 0) {
     throw new ApiError(404, "No orders found for this user");
   }
 
-  res.status(200).json(new ApiResponse(200, order, "here is your orders"));
+  // remove any items with missing book reference
+  orders = orders.map((order) => {
+    order.items = order.items.filter((item) => item.book !== null);
+    return order;
+  });
+
+  res.status(200).json(new ApiResponse(200, orders, "here is your orders"));
 });
 
 const placeOrder = async (req, res) => {
