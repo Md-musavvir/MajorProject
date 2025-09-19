@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 import { toast } from "react-toastify";
 
 function Signup() {
@@ -11,6 +12,8 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate(); // ✅ initialize navigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +30,11 @@ function Signup() {
       if (response.status === 200) {
         setMessage(response.data.message);
         toast.success(response.data.message);
+
+        // Redirect to login after 1.5 seconds
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       }
     } catch (err) {
       let msg = "Something went wrong";
