@@ -31,7 +31,6 @@ function Signup() {
         setMessage(response.data.message);
         toast.success(response.data.message);
 
-        // Redirect to login after 1.5 seconds
         setTimeout(() => {
           navigate("/login");
         }, 1500);
