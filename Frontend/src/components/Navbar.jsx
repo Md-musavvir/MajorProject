@@ -21,7 +21,7 @@ export default function Navbar({ cartItems = 0 }) {
     if (!token) return;
 
     axios
-      .get("http://localhost:8000/api/v1/user/userData", {
+      .get("https://majorproject-d54u.onrender.com/api/v1/user/userData", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUsername(res.data.data.username || res.data.data.email))
@@ -38,7 +38,7 @@ export default function Navbar({ cartItems = 0 }) {
 
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/user/getBook?title=${value}`,
+          `https://majorproject-d54u.onrender.com/api/v1/user/getBook?title=${value}`,
           { headers: { Authorization: `Bearer ${token}` } } // send token
         );
 

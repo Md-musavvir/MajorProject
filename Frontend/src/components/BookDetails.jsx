@@ -26,7 +26,7 @@ export default function BookDetails() {
 
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/user/fetchBook/${id}`,
+          `https://majorproject-d54u.onrender.com/api/v1/user/fetchBook/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setBook(res.data.data);
@@ -51,7 +51,7 @@ export default function BookDetails() {
 
       const token = localStorage.getItem("accessToken");
       await axios.post(
-        "http://localhost:8000/api/v1/user/addToCart",
+        "https://majorproject-d54u.onrender.com/api/v1/user/addToCart",
         { bookId: book._id },
         {
           headers: {

@@ -33,7 +33,7 @@ function BookAdminDashboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/admin/addBook",
+        "https://majorproject-d54u.onrender.com/api/v1/admin/addBook",
         formData,
         {
           headers: {
@@ -69,7 +69,7 @@ function BookAdminDashboard() {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.get(
-        `http://localhost:8000/api/v1/admin/getBooks/${categoryName.toLowerCase()}`,
+        `https://majorproject-d54u.onrender.com/api/v1/admin/getBooks/${categoryName.toLowerCase()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -104,7 +104,7 @@ function BookAdminDashboard() {
       };
 
       const response = await axios.put(
-        `http://localhost:8000/api/v1/admin/updateBook/${bookId}`,
+        `https://majorproject-d54u.onrender.com/api/v1/admin/updateBook/${bookId}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -128,7 +128,7 @@ function BookAdminDashboard() {
   const handleDelete = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/v1/admin/deleteBook/${bookId}`,
+        `https://majorproject-d54u.onrender.com/api/v1/admin/deleteBook/${bookId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

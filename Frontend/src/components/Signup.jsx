@@ -19,7 +19,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        "https://majorproject-d54u.onrender.com/api/v1/user/register",
         { username: userName, email, password },
         { withCredentials: true }
       );

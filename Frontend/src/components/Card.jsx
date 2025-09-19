@@ -1,7 +1,9 @@
 import React from "react";
+
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { addToCart, removeFromCart } from "../Store/cartSlice";
 
 function Card({ src, title, author, price, id }) {
@@ -14,7 +16,7 @@ function Card({ src, title, author, price, id }) {
       dispatch(addToCart({ id, name: title, price }));
       const token = localStorage.getItem("accessToken");
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/addToCart",
+        "https://majorproject-d54u.onrender.com/api/v1/user/addToCart",
         { bookId: id },
         {
           headers: {

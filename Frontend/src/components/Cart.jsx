@@ -18,7 +18,7 @@ function Cart() {
 
       const token = localStorage.getItem("accessToken");
       await axios.put(
-        "http://localhost:8000/api/v1/user/removeFromCart",
+        "https://majorproject-d54u.onrender.com/api/v1/user/removeFromCart",
         { bookId: id },
         {
           headers: {

@@ -11,7 +11,7 @@ export default function Fiction() {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/getBooks/fiction",
+          "https://majorproject-d54u.onrender.com/api/v1/user/getBooks/fiction",
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,

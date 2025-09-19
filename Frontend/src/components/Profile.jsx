@@ -19,7 +19,7 @@ export default function Profile() {
         if (!token) throw new Error("No access token found");
 
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/userData",
+          "https://majorproject-d54u.onrender.com/api/v1/user/userData",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

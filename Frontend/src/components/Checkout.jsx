@@ -19,7 +19,7 @@ function Checkout() {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/getCart",
+          "https://majorproject-d54u.onrender.com/api/v1/user/getCart",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -68,7 +68,7 @@ function Checkout() {
       setPlacingOrder(true);
       const token = localStorage.getItem("accessToken");
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/placeOrder",
+        "https://majorproject-d54u.onrender.com/api/v1/user/placeOrder",
         orderPayload,
         {
           headers: {
