@@ -94,7 +94,7 @@ export default function BookDetails() {
         </p>
         <p className="text-xl text-gray-700">
           <span className="font-semibold">Price:</span>{" "}
-          <span className="text-green-600">${book.price}</span>
+          <span className="text-green-600">₹{book.price}</span>
         </p>
         <p className="text-xl text-gray-700 capitalize">
           <span className="font-semibold">Category:</span> {book.category}

@@ -107,7 +107,7 @@ export default function Navbar({ cartItems = 0 }) {
                   >
                     <div className="font-medium capitalize">{book.title}</div>
                     <div className="text-sm text-gray-500">
-                      {book.author} • ${book.price}
+                      {book.author} • ₹{book.price}
                     </div>
                   </li>
                 ))}
