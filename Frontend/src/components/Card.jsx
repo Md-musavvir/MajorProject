@@ -1,14 +1,15 @@
 import React from "react";
-
 import axios from "axios";
 import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 import { addToCart, removeFromCart } from "../Store/cartSlice";
 
 function Card({ src, title, author, price, id }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.stopPropagation();
     try {
       dispatch(addToCart({ id, name: title, price }));
       const token = localStorage.getItem("accessToken");
@@ -28,8 +29,16 @@ function Card({ src, title, author, price, id }) {
       dispatch(removeFromCart(id));
     }
   };
+
+  const handleCardClick = () => {
+    navigate(`/book/${id}`);
+  };
+
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 p-4 transition-transform duration-300 hover:scale-105">
+    <div
+      onClick={handleCardClick}
+      className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 p-4 transition-transform duration-300 hover:scale-105 cursor-pointer"
+    >
       <img
         src={src}
         alt={title}

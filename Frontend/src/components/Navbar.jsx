@@ -56,7 +56,7 @@ export default function Navbar({ cartItems = 0 }) {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && suggestions.length > 0) {
-      navigate(`/book/${suggestions[0]._id}`); // redirect to first match
+      navigate(`/book/${suggestions[0]._id}`);
       setQuery("");
       setSuggestions([]);
     }
