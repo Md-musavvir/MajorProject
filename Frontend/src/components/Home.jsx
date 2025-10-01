@@ -15,7 +15,7 @@ export default function Home() {
     <div>
       <div className="bg-blue-50 py-8 flex justify-center">
         <img
-          src="./Assets/Poster.png"
+          src="https://res.cloudinary.com/dpudg93fp/image/upload/v1759308515/pexels-cottonbro-4861363_qr8t1f.png"
           alt="Book Store Banner"
           className="w-[90%] md:w-[85%] lg:w-[80%] rounded-lg shadow-lg"
         />
