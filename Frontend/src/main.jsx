@@ -12,7 +12,7 @@ import {
 import App from "./App";
 import AuthLayout from "./components/AuthLayout";
 import BookAdminDashboard from "./components/BookAdminDashboard.jsx";
-import BookDetails from "./components/BookDetails.jsx"; // ← Import BookDetails
+import BookDetails from "./components/BookDetails.jsx";
 import Cart from "./components/Cart.jsx";
 import Checkout from "./components/Checkout.jsx";
 import Fantasy from "./components/Fantasy.jsx";
@@ -30,7 +30,6 @@ import { store } from "./Store/store";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Routes with Navbar/Footer */}
       <Route path="/" element={<App />}>
         <Route
           index

@@ -1,9 +1,9 @@
 import "./App.css";
-import "react-toastify/dist/ReactToastify.css"; // ✅ import CSS
+import "react-toastify/dist/ReactToastify.css";
 
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify"; // ✅ import ToastContainer
+import { ToastContainer } from "react-toastify";
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -18,10 +18,9 @@ function App() {
       <Outlet />
       <Footer />
 
-      {/* ✅ Toast container for notifications */}
       <ToastContainer
         position="top-right"
-        autoClose={3000} // disappears after 3 seconds
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
